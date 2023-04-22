@@ -18,8 +18,8 @@ export class GraphicCardService {
     return this.httpClient.get<GraphicCard[]>(`${environment.baseUrlAPI}`);
   }
 
-  getDataApi(): Observable<any> {
-    return this.httpClient.get(`${environment.baseUrlAPI}`)
+  getDataApi(): Observable<GraphicCard[] | TrackHttpError> {
+    return this.httpClient.get<GraphicCard[]>(`${environment.baseUrlAPI}`)
     .pipe(catchError((err) => this.handleHttpError(err)));
   }
 
