@@ -6,7 +6,6 @@ import { Observable, catchError, delay, of, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { GraphicCard } from '../interfaces/graphicCard.interface';
 
-import data from '../../../assets/graphics-cards.json';
 import { TrackHttpError } from '../models/trackHttpError';
 
 @Injectable({
@@ -19,20 +18,13 @@ export class GraphicCardService {
     return this.httpClient.get<GraphicCard[]>(`${environment.baseUrlAPI}`);
   }
 
-
   getDataApi(): Observable<any> {
-    this.httpClient.get(`${environment.baseUrlAPI}`).subscribe(data =>{
-      console.log(data);   
-    })
-    return of(data).pipe(
-      delay(1500)
-    )
+    return this.httpClient.get(`${environment.baseUrlAPI}`)
     .pipe(catchError((err) => this.handleHttpError(err)));
   }
 
   getDetails(id: number): Observable<any>  {
-    this.httpClient.get<GraphicCard>(`${environment.baseUrlAPI}`)
-    return of(data[id - 1])
+    return this.httpClient.get<GraphicCard>(`${environment.baseUrlAPI}/?id=${id}`)
     .pipe(catchError((err) => this.handleHttpError(err)));
   }
 
