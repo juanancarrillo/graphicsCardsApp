@@ -21,7 +21,7 @@ export class GraphicCardService {
 
 
   getDataApi(): Observable<any> {
-    this.httpClient.get("../../../assets/graphics-cards.json").subscribe(data =>{
+    this.httpClient.get(`${environment.baseUrlAPI}`).subscribe(data =>{
       console.log(data);   
     })
     return of(data).pipe(
@@ -31,7 +31,7 @@ export class GraphicCardService {
   }
 
   getDetails(id: number): Observable<any>  {
-    this.httpClient.get<GraphicCard>("../../../assets/graphics-cards.json")
+    this.httpClient.get<GraphicCard>(`${environment.baseUrlAPI}`)
     return of(data[id - 1])
     .pipe(catchError((err) => this.handleHttpError(err)));
   }

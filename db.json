@@ -1,4 +1,6 @@
-[
+
+{
+  "graphics": [
     {
         "id": 1,
       "name": "Asus Rog Strix",
@@ -232,3 +234,6 @@
       "image": "https://assets.nvidia.partners/images/24G-P5-3998-KR.jpg"
     }
   ]
+
+
+}
