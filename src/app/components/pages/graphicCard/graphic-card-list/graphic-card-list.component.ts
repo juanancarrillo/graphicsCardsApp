@@ -46,10 +46,7 @@ constructor(
 }
 
 ngOnInit(): void {
-  this.query = '';
-  this.loading$ = this.store.select(selectLoading)
-  this.store.dispatch(loadGraphics({name: this.query, cards: this.limit}))
-  this.graphicsCards$ = this.store.select(selectListGraphics)
+  this.getGraphicsCard();
 }
 
 @HostListener('window:scroll', [])
@@ -64,13 +61,7 @@ ngOnInit(): void {
 
 onScrollDown():void{
     this.limit = this.limit + 3;
-    if(this.query == undefined){
-      this.query = '';
-    }
-    this.query
-    this.loading$ = this.store.select(selectLoading)
-    this.store.dispatch(loadGraphics({name: this.query, cards: this.limit}))
-    this.graphicsCards$ = this.store.select(selectListGraphics)
+    this.getGraphicsCard();
 }
 
 onScrollTop():void{
@@ -90,10 +81,16 @@ private onUrlChanged(): void {
 private getCharactersByQuery(): void {
   this.route.queryParams.pipe(take(1)).subscribe((params: any) => {
     this.query = params['q'];
-    this.loading$ = this.store.select(selectLoading)
-    this.store.dispatch(loadGraphics({name: this.query, cards: this.limit}))
-    this.graphicsCards$ = this.store.select(selectListGraphics)
+    this.getGraphicsCard();
   });
 }
 
+private getGraphicsCard(): void {
+  if(this.query == undefined){
+    this.query = '';
+  }
+  this.loading$ = this.store.select(selectLoading)
+  this.store.dispatch(loadGraphics({name: this.query, cards: this.limit}))
+  this.graphicsCards$ = this.store.select(selectListGraphics)
+}
 }
