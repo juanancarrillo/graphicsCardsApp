@@ -6,7 +6,6 @@ import { Observable, catchError, delay, of, pipe, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { GraphicCard } from '../interfaces/graphicCard.interface';
 
-import { TrackHttpError } from '../models/trackHttpError';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +16,7 @@ export class GraphicCardService {
   getGraphicCardList(name: string, cards: number):Observable<GraphicCard[]>{
     return this.httpClient.get<GraphicCard[]>(`${environment.baseUrlAPI}?name_like=${name}&_limit=${cards}`)
     .pipe(
-      delay(3000)
+      delay(1500)
     )
   }
 
@@ -28,17 +27,4 @@ export class GraphicCardService {
   getDetails(id: number): Observable<any>{
     return this.httpClient.get<GraphicCard[]>(`${environment.baseUrlAPI}/?id=${id}`)
   }
-
-  private handleHttpError(
-    error:HttpErrorResponse
-  ):Observable<TrackHttpError>{
-
-    let dataError = new TrackHttpError();
-    dataError.errorNumber = error.status;
-    dataError.message = error.statusText;
-    dataError.friendlyMessage = 'An error occured retrienving data.';
-    return throwError(dataError);
-  }
-
-
 }

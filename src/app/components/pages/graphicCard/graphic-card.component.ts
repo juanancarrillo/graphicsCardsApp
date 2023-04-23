@@ -21,8 +21,9 @@ import { GraphicCard } from '../../../shared/interfaces/graphicCard.interface';
       <a [routerLink]="['/graphic-card-details', graphicCard.id]">
             <h2>{{ graphicCard.model | slice: 0:15}}</h2>
           </a>
-          <p>{{ graphicCard.manufacturer }}</p>
-          <p>{{ graphicCard.price }}</p>
+          <h4 class="text-muted">{{ graphicCard.name }}</h4>
+          <h4 class="text-muted">Manufacturer: {{ graphicCard.manufacturer }}</h4>
+          <h4 class="text-muted">{{ graphicCard.price }} $</h4>
           <div>
         </div>
       </div>

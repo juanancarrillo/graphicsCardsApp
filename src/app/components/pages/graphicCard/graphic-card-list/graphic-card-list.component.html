@@ -1,12 +1,12 @@
 
 <div class="row" infinite-scroll (scrolled)="onScrollDown()">
   <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let graphic of graphicsCards$ | async ">
-    <app-graphic-card [graphicCard]="graphic"></app-graphic-card>
+      <app-graphic-card [graphicCard]="graphic"></app-graphic-card>
   </div>
-  <div class="col-xs-12 col-sm-12 col-md-12 mt-5 container-notFound" *ngIf="(loading$ | async)">
+  <div class="col-xs-12 col-sm-12 col-md-12 mt-5" *ngIf="(loading$ | async)">
     <app-spinner></app-spinner>
   </div>
-  <div class="col-xs-12 col-sm-12 col-md-12 mt-5 container-notFound">
+  <div class="col-xs-12 col-sm-12 col-md-12 mt-5">
     <button type="button" class="btn btn-primary btn-lg" 
             [ngClass]="'no-hidden'" 
             *ngIf="showGoUpButton"
