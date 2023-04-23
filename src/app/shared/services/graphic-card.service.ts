@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import { Observable, catchError, delay, of, throwError } from 'rxjs';
+import { Observable, catchError, delay, of, pipe, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { GraphicCard } from '../interfaces/graphicCard.interface';
@@ -15,17 +15,18 @@ export class GraphicCardService {
   constructor(private httpClient: HttpClient) {}
 
   getGraphicCardList():Observable<GraphicCard[]>{
-    return this.httpClient.get<GraphicCard[]>(`${environment.baseUrlAPI}`);
-  }
-
-  getDataApi(): Observable<GraphicCard[] | TrackHttpError> {
     return this.httpClient.get<GraphicCard[]>(`${environment.baseUrlAPI}`)
-    .pipe(catchError((err) => this.handleHttpError(err)));
+    .pipe(
+      delay(1500)
+    )
   }
 
-  getDetails(id: number): Observable<any>  {
-    return this.httpClient.get<GraphicCard>(`${environment.baseUrlAPI}/?id=${id}`)
-    .pipe(catchError((err) => this.handleHttpError(err)));
+  getDataApi(): Observable<GraphicCard[]> {
+    return this.httpClient.get<GraphicCard[]>(`${environment.baseUrlAPI}`)
+  }
+
+  getDetails(id: number): Observable<any>{
+    return this.httpClient.get<GraphicCard[]>(`${environment.baseUrlAPI}/?id=${id}`)
   }
 
   private handleHttpError(

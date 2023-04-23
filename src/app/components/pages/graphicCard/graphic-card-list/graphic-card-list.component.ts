@@ -11,6 +11,11 @@ import { filter, take } from 'rxjs/operators';
 import { GraphicCard } from '../../../../shared/interfaces/graphicCard.interface';
 import { GraphicCardService } from '../../../../shared/services/graphic-card.service';
 import { TrackHttpError } from '../../../../shared/models/trackHttpError';
+import { Observable } from 'rxjs';
+import { selectListGraphics, selectLoading } from 'src/app/state/selectors/graphics.selectors';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/state/app.state';
+import { loadGraphics } from 'src/app/state/actions/graphics.actions';
 
 type RequestInfo = {
   next: string;
@@ -35,7 +40,7 @@ export class GraphicCardListComponent implements OnInit {
   private hideScrollHeight = 200;
 
   private showScrollHeight = 500;
-
+/*
   constructor(
     @Inject(DOCUMENT) private document:Document,
     private graphicCardSvc: GraphicCardService,
@@ -47,7 +52,7 @@ export class GraphicCardListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDataFromService();
-  }
+  }*/
 
   /*private getDataFromService(): void {
     this.graphicCardSvc
@@ -56,6 +61,7 @@ export class GraphicCardListComponent implements OnInit {
         {this.graphicsCards = res;
       })
 }*/
+/*
 private getDataFromService(): void {
   this.graphicCardSvc
     .getDataApi()
@@ -63,5 +69,20 @@ private getDataFromService(): void {
       {this.graphicsCards = res;
     })
 }
+*/
+graphicsCards$: Observable<any> = new Observable()
+loading$: Observable<boolean> = new Observable()
+
+constructor(private store: Store<AppState>) {
+
+}
+
+ngOnInit(): void {
+  this.loading$ = this.store.select(selectLoading)//TODO: true, false
+  this.store.dispatch(loadGraphics())
+  this.graphicsCards$ = this.store.select(selectListGraphics)
+  console.log(this.graphicsCards$);
+}
+
 
 }

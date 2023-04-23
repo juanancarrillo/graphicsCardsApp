@@ -1,13 +1,14 @@
 
 <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let graphic of graphicsCards">
+    <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let graphic of graphicsCards$ | async ">
        <app-graphic-card [graphicCard]="graphic"></app-graphic-card>
     </div>
     <div
       class="col-xs-12 col-sm-12 col-md-12 mt-5 container-notFound"
       *ngIf="graphicsCards.length <= 0"
     >
-      <p>No results.......</p>
+      <p>No results.......{{loading$ | async | json}}</p>
+      <p>{{ graphicsCards$ | async | json }}</p>
     </div>
   </div>
   

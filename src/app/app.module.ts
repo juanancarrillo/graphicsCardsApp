@@ -8,6 +8,8 @@ import { FormSearchComponent } from './shared/components/form-search/form-search
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { graphicsReducer } from './state/reducers/graphics.reducers';
+import { GraphicsEffects } from './state/effects/graphics.effects';
 
 @NgModule({
   declarations: [
@@ -19,8 +21,8 @@ import { EffectsModule } from '@ngrx/effects';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([])
+    StoreModule.forRoot({graphics: graphicsReducer}),
+    EffectsModule.forRoot([GraphicsEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

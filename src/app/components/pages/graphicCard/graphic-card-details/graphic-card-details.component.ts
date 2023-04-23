@@ -17,7 +17,7 @@ import { TrackHttpError } from 'src/app/shared/models/trackHttpError';
   styleUrls: ['./graphic-card-details.component.scss']
 })
 export class GraphicCardDetailsComponent implements OnInit {
-  graphicCard$: Observable<GraphicCard | TrackHttpError>;
+  graphicCard$: Observable<any> = new Observable()
 
   constructor(private route:ActivatedRoute, private graphicCardSvc:GraphicCardService, private location:Location) { }
 

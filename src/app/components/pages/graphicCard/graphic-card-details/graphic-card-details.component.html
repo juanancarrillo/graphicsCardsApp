@@ -1,6 +1,6 @@
-<div class="row justify-content-center mt-3" *ngIf="graphicCard$ | async as graphicCard">
+<div class="row justify-content-center mt-3" *ngFor="let graphic of graphicCard$ | async ">
   <div class="col-xs-12 col-sm-6 col-md-6 justify-content-center">
-      <app-graphic-card [graphicCard]="$any(graphicCard)"></app-graphic-card>
+      <app-graphic-card [graphicCard]="graphic"></app-graphic-card>
   </div>
 </div>
 <button (click)="onGoBack()" class="btn btn-primary btn-lg mt-3">
