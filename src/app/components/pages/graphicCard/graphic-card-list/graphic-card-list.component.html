@@ -8,7 +8,10 @@
       *ngIf="graphicsCards.length <= 0"
     >
       <p>No results.......{{loading$ | async | json}}</p>
-      <p>{{ graphicsCards$ | async | json }}</p>
+      <div *ngIf="(loading$ | async)">
+        <app-spinner></app-spinner>
+      </div>
+      
     </div>
   </div>
   

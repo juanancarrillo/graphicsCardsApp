@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { graphicsReducer } from './state/reducers/graphics.reducers';
 import { GraphicsEffects } from './state/effects/graphics.effects';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
