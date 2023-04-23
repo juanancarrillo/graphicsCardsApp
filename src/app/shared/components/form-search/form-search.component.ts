@@ -23,7 +23,7 @@ export class FormSearchComponent  implements OnInit {
   }
 
   onSearch(value: string) {
-    if (value && value.length > 3) {
+    if (value && value.length > 2) {
       this.router.navigate(['/graphic-card-list'], {
         queryParams: { q: value },
       });

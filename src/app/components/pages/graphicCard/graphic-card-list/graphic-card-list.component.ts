@@ -6,20 +6,16 @@ import {
   ActivatedRoute, NavigationEnd, ParamMap, Router,
 } from '@angular/router';
 
+import { Observable } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 
 import { GraphicCard } from '../../../../shared/interfaces/graphicCard.interface';
-import { GraphicCardService } from '../../../../shared/services/graphic-card.service';
-import { TrackHttpError } from '../../../../shared/models/trackHttpError';
-import { Observable } from 'rxjs';
 import { selectListGraphics, selectLoading } from 'src/app/state/selectors/graphics.selectors';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
 import { loadGraphics } from 'src/app/state/actions/graphics.actions';
 
-type RequestInfo = {
-  next: string;
-};
+
 @Component({
   selector: 'app-graphic-card-list',
   templateUrl: './graphic-card-list.component.html',
@@ -29,60 +25,75 @@ export class GraphicCardListComponent implements OnInit {
 
   graphicsCards: GraphicCard[] = [];
 
-  info: RequestInfo = {
-    next: '',
-  };
+  limit = 6
+  private query: string = '';
 
   showGoUpButton = false;
 
-  private pageNum = 1;
-
   private hideScrollHeight = 200;
-
   private showScrollHeight = 500;
-/*
-  constructor(
-    @Inject(DOCUMENT) private document:Document,
-    private graphicCardSvc: GraphicCardService,
-    private route: ActivatedRoute,
-    private router: Router,
+
+  graphicsCards$: Observable<any> = new Observable()
+  loading$: Observable<boolean> = new Observable()
+
+constructor(
+  private store: Store<AppState>,
+  @Inject(DOCUMENT) private document:Document,
+  private route: ActivatedRoute,
+  private router: Router
   ) {
-    
-  }
-
-  ngOnInit(): void {
-    this.getDataFromService();
-  }*/
-
-  /*private getDataFromService(): void {
-    this.graphicCardSvc
-      .getGraphicCardList()
-      .subscribe(res => 
-        {this.graphicsCards = res;
-      })
-}*/
-/*
-private getDataFromService(): void {
-  this.graphicCardSvc
-    .getDataApi()
-    .subscribe(res => 
-      {this.graphicsCards = res;
-    })
-}
-*/
-graphicsCards$: Observable<any> = new Observable()
-loading$: Observable<boolean> = new Observable()
-
-constructor(private store: Store<AppState>) {
-
+    this.onUrlChanged();
 }
 
 ngOnInit(): void {
-  this.loading$ = this.store.select(selectLoading)//TODO: true, false
-  this.store.dispatch(loadGraphics())
+  this.query = '';
+  this.loading$ = this.store.select(selectLoading)
+  this.store.dispatch(loadGraphics({name: this.query, cards: this.limit}))
   this.graphicsCards$ = this.store.select(selectListGraphics)
-  console.log(this.graphicsCards$);
 }
 
+@HostListener('window:scroll', [])
+  onWindowScroll():void {
+    const yOffSet = window.pageYOffset;
+    if ((yOffSet || this.document.documentElement.scrollTop || this.document.body.scrollTop) > this.showScrollHeight) {
+      this.showGoUpButton = true;
+    } else if (this.showGoUpButton && (yOffSet || this.document.documentElement.scrollTop || this.document.body.scrollTop) < this.hideScrollHeight) {
+      this.showGoUpButton = false;
+    }
+  }
+
+onScrollDown():void{
+    this.limit = this.limit + 3;
+    if(this.query == undefined){
+      this.query = '';
+    }
+    this.query
+    this.loading$ = this.store.select(selectLoading)
+    this.store.dispatch(loadGraphics({name: this.query, cards: this.limit}))
+    this.graphicsCards$ = this.store.select(selectListGraphics)
+}
+
+onScrollTop():void{
+  this.document.body.scrollTop = 0; // Safari
+  this.document.documentElement.scrollTop = 0; // Other
+}
+
+private onUrlChanged(): void {
+  this.router.events
+    .pipe(filter((event) => event instanceof NavigationEnd))
+    .subscribe(() => {
+      this.limit = 6;
+      this.getCharactersByQuery();
+    });
+}
+
+private getCharactersByQuery(): void {
+  this.route.queryParams.pipe(take(1)).subscribe((params: any) => {
+    this.query = params['q'];
+    this.loading$ = this.store.select(selectLoading)
+    this.store.dispatch(loadGraphics({name: this.query, cards: this.limit}))
+    this.graphicsCards$ = this.store.select(selectListGraphics)
+  });
+}
 
 }

@@ -3,12 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
 
 import { Observable } from 'rxjs';
-
+import { take } from 'rxjs/operators';
 
 import { GraphicCardService } from '../../../../shared/services/graphic-card.service';
 import { GraphicCard } from '../../../../shared/interfaces/graphicCard.interface';
-import { take } from 'rxjs/operators';
-import { TrackHttpError } from 'src/app/shared/models/trackHttpError';
 
 
 @Component({

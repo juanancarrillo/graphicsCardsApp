@@ -14,10 +14,10 @@ import { TrackHttpError } from '../models/trackHttpError';
 export class GraphicCardService {
   constructor(private httpClient: HttpClient) {}
 
-  getGraphicCardList():Observable<GraphicCard[]>{
-    return this.httpClient.get<GraphicCard[]>(`${environment.baseUrlAPI}`)
+  getGraphicCardList(name: string, cards: number):Observable<GraphicCard[]>{
+    return this.httpClient.get<GraphicCard[]>(`${environment.baseUrlAPI}?name_like=${name}&_limit=${cards}`)
     .pipe(
-      delay(1500)
+      delay(3000)
     )
   }
 

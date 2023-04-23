@@ -1,4 +1,4 @@
-import { loadedGraphic, loadedGraphics } from './../actions/graphics.actions';
+import { loadedGraphics } from './../actions/graphics.actions';
 import { GraphicCardState } from '../../shared/models/graphicCard.state';
 import { createReducer, on } from '@ngrx/store';
 import { loadGraphics } from '../actions/graphics.actions';
@@ -11,9 +11,6 @@ export const graphicsReducer = createReducer(
         return { ...state, loading: true }
     }),
     on(loadedGraphics, (state, { graphics }) => {
-        return { ...state, loading: false, graphics }
-    }),
-    on(loadedGraphic, (state, { graphics }) => {
         return { ...state, loading: false, graphics }
     })
 );
