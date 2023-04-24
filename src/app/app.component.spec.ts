@@ -1,18 +1,22 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { HeaderComponent } from '../app/shared/components/header/header.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AppModule } from './app.module';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        HeaderComponent
       ],
+      imports: [
+        AppModule,
+        RouterTestingModule
+      ]
     }).compileComponents();
-  });
+  }));
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -26,10 +30,11 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('graphicsCardsApp');
   });
 
-  it('should render title', () => {
+  it('should render the header and router-outlet', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('graphicsCardsApp app is running!');
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('app-header')).toBeTruthy();
+    expect(compiled.querySelector('.container router-outlet')).toBeTruthy();
   });
 });

@@ -85,7 +85,7 @@ private getCharactersByQuery(): void {
   });
 }
 
-private getGraphicsCard(): void {
+getGraphicsCard(): void {
   if(this.query == undefined){
     this.query = '';
   }
