@@ -33,3 +33,17 @@ Run `npm run json-run` for a Fake API. Navigate to `http://localhost:3000/graphi
 ## Step 2.  Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+
+# Running tests  🧪
+To run tests, follow these steps:
+
+Run `ng test`. The command will launch the Karma test runner and execute all unit tests located in the src/app directory.
+
+Alternatively, you can run a specific test suite or test file by providing the path to the test file as an argument:
+
+Run `ng test path/to/test/file.spec.ts`. The command will launch the Karma test runner and execute the specified test file.
+
+Note: You can also use the --watch flag to run the tests in watch mode, which will automatically re-run the tests when changes are made to the source files.
+
+Run `ng test --watch=false --browsers=ChromeHeadless`. 
