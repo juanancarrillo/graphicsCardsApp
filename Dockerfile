@@ -1,4 +1,4 @@
-FROM node:10-alpine as build-step
+FROM node:16-alpine as build-step
 
 RUN mkdir -p /app
 
@@ -12,5 +12,5 @@ COPY . /app
 
 RUN npm run build --prod
 
-FROM nginx:1.17.1-alpine
+FROM nginx:alpine
 COPY --from=build-step /app/dist/graphics-cards-app /usr/share/nginx/html
